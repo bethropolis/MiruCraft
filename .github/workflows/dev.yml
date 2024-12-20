@@ -8,27 +8,6 @@ on:
       - 'docs/**'
       - '.gitignore'
 
-
-  # Keep the manual trigger
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: "Log level"
-        required: true
-        type: choice
-        options: [info, warning, debug]
-        default: "warning"
-      nsis:
-        description: "Create installer"
-        type: boolean
-        required: true
-        default: false
-      package: 
-        description: "Upload artifacts"
-        type: boolean
-        required: false
-        default: true
-
 jobs:
   build:
     strategy:
@@ -36,13 +15,13 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'Miru-test'
+          - name: 'MiruCraft'
             platform:  'linux/amd64'
             os: 'ubuntu-latest'
-          - name: 'Miru-test'
+          - name: 'MiruCraft'
             platform:  'windows/amd64'
             os: 'windows-latest'
-          - name: 'Miru test'
+          - name: 'MiruCraft'
             platform:  'darwin/universal'
             os: 'macos-latest'
 
@@ -136,3 +115,4 @@ jobs:
           name: ${{ matrix.build.name }}-windows
           path: build/bin/${{matrix.build.name}}-windows-amd64.zip
         if: runner.os == 'Windows'
+

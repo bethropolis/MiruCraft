@@ -1,4 +1,4 @@
-module miru-test
+module MiruCraft
 
 go 1.21
 

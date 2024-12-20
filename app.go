@@ -2,7 +2,7 @@ package main
 
 import (
     "context"
-    "miru-test/app" // Import the requests package
+    "MiruCraft/app" // Import the requests package
 )
 
 // App struct
