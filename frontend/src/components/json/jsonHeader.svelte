@@ -31,10 +31,10 @@
 
 
   async function callLatest() {
+    try {
     beforeRun();
     detailList = [];
     await loadExtension();
-    try {
       const res = await $manager.latest(page);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -49,10 +49,10 @@
   }
 
   async function callDetail() {
+    try {
     beforeRun();
     watchList = [];
     await loadExtension();
-    try {
       const res = await $manager.detail(detailUrl);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -66,10 +66,10 @@
   }
 
   async function callSearch() {
+    try {
     beforeRun();
     detailList = [];
     await loadExtension();
-    try {
       const res = await $manager.search(searchQuery);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -84,9 +84,9 @@
   }
 
   async function callWatch() {
+    try {
     beforeRun();
     await loadExtension();
-    try {
       const res = await $manager.watch(watchUrl);
       $jsonStore = JSON.stringify(res, null, 2);
     } catch (error) {

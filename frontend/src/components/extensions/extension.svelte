@@ -32,7 +32,6 @@
   const preloadImage = async (url) => {
   try {
     const response = await FetchImage(url);
-    console.log("Image loaded:", response);
     return `data:${response.mimeType};base64,${response.data}`;
   } catch (error) {
     console.error("Image failed to load:", error);
@@ -54,7 +53,7 @@
   };
 
   const handleLoad = async () => {
-    await extensionDB.addExtension(DB.get("current"));
+    if(DB.get("current")) await extensionDB.addExtension(DB.get("current"));
     DB.set("current", extension);
     updated();
   };
@@ -69,7 +68,7 @@
   };
 </script>
 
-<div class="card bg-base-100 shadow-xl dark:shadow-none">
+<div class="card bg-base-100">
   <div class="card-body flex-row p-2">
     <div class="h-10 w-10 mr-2 rounded-full overflow-hidden object-center">
       {#await imagePromise}

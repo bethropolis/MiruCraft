@@ -4,7 +4,9 @@
   import ExtensionManager from "./components/extensions/extensionManager.svelte";
   import JsonHeader from "./components/json/jsonHeader.svelte";
   import JsonEditorPane from "./components/json/JsonEditorPane.svelte";
+  import Settings from "./components/settings/settings.svelte";
   import Layout from "./layout.svelte";
+  import Info from "./components/settings/info.svelte";
 </script>
 
 <Layout>
@@ -18,12 +20,16 @@
       <ExtensionManager />
     {/if}
     {#if $activeTab === "settings"}
-      <!-- Methods content here -->
+      <Settings/>
     {/if}
   </div>
 
   <div class="flex-1 py-4 pl-4 max-w-[calc(50%-2rem)]">
-    <JsonHeader />
-    <JsonEditorPane />
+    {#if $activeTab == "settings"}
+        <Info/>
+    {:else}
+      <JsonHeader />
+      <JsonEditorPane />
+    {/if}
   </div>
 </Layout>

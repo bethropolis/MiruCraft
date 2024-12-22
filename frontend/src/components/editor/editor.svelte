@@ -4,7 +4,7 @@
   import { javascript } from "@codemirror/lang-javascript";
   import { dracula } from "@ddietr/codemirror-themes/dracula";
   import {materialLight} from '@ddietr/codemirror-themes/material-light'
-  import { code } from "../../lib/store/store";
+  import { code, config } from "../../lib/store/store";
   import { DB } from "../../lib/db/local";
   import {
     codeCompletions,
@@ -23,6 +23,11 @@
       saveCurrentLocal(code);
     }, debounceDelay);
   };
+
+
+  const editorTheme = () =>{
+    return $config.theme == "dark" ? dracula : materialLight;
+  }
 </script>
 
 <CodeMirror
@@ -35,8 +40,8 @@
       fontSize: "10pt"
     },
   }}
-  theme={dracula}
+  theme={editorTheme()}
   extensions={[jsMetadataCompletions, codeCompletions]}
-  placeholder="Write your code here...(Ctrl+Space for autocomplete)"
+  placeholder="Write your code here...(Ctrl+Space) for autocomplete"
   on:change={(c) => saveCode(c.detail)}
 />
