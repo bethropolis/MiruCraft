@@ -2,8 +2,7 @@ package main
 
 import (
     "context"
-    "fmt"
-    "miru-test/app" // Import the requests package
+    "MiruCraft/app" // Import the requests package
 )
 
 // App struct
@@ -24,12 +23,12 @@ func (a *App) startup(ctx context.Context) {
     a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-    return fmt.Sprintf("Hello %s, It's show time!", name)
-}
 
 // MakeHTTPRequest is a Wails function that calls the MakeRequest method from requests.go
 func (a *App) Request(req app.HTTPRequest) (app.HTTPResponse, error) {
     return app.MakeRequest(req)
+}
+
+func (a *App) FetchImage(url string)  (app.ImageResponse, error) {
+    return app.FetchAndCacheImage(url);
 }

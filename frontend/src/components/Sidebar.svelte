@@ -5,7 +5,7 @@
   import Settings from "./icons/settings.svelte";
 </script>
 
-<ul class="menu bg-neutral h-full flex flex-col">
+<ul class="menu  h-full flex flex-col text-slate-300">
     <!-- Top Aligned Item -->
     <li class="mb-2">
       <a on:click={() => activeTab.set('code')} class="tooltip tooltip-right" data-tip="code">

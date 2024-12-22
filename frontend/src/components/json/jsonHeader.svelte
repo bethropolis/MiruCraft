@@ -31,10 +31,10 @@
 
 
   async function callLatest() {
+    try {
     beforeRun();
     detailList = [];
     await loadExtension();
-    try {
       const res = await $manager.latest(page);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -49,10 +49,10 @@
   }
 
   async function callDetail() {
+    try {
     beforeRun();
     watchList = [];
     await loadExtension();
-    try {
       const res = await $manager.detail(detailUrl);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -66,10 +66,10 @@
   }
 
   async function callSearch() {
+    try {
     beforeRun();
     detailList = [];
     await loadExtension();
-    try {
       const res = await $manager.search(searchQuery);
       $jsonStore = JSON.stringify(res, null, 2);
 
@@ -84,9 +84,9 @@
   }
 
   async function callWatch() {
+    try {
     beforeRun();
     await loadExtension();
-    try {
       const res = await $manager.watch(watchUrl);
       $jsonStore = JSON.stringify(res, null, 2);
     } catch (error) {
@@ -175,7 +175,10 @@
 </Modal>
 
 <div class="flex px-2 pb-2 justify-between items-center">
-  <h2 class="mb-4 font-bold">Result</h2>
+  <div role="tablist" class="tabs m-0  tabs-boxed bg-base-200">
+    <a role="tab" class="tab text-sm">Result</a>
+    <a role="tab" class="tab text-sm tab-disabled">Console</a>
+  </div>
 
   <div class="buttons">
     <button

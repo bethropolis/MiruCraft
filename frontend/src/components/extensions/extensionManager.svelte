@@ -129,7 +129,7 @@
           {#each extensions as extension}
             <Extension
               {extension}
-              load={current && current.package !== extension.package}
+              load={current && current.package !== extension.package || !current}
               remove={true}
               on:updated={handleUpdate}
             />

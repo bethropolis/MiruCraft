@@ -1,4 +1,6 @@
 <script>
+  // @ts-ignore
+  import { FetchImage } from "../../../wailsjs/go/main/App";
   import { DB, extensionDB } from "../../lib/db/db";
   import { createEventDispatcher } from "svelte";
   import Download from "../icons/download.svelte";
@@ -6,6 +8,8 @@
   import Bracket from "../icons/bracket.svelte";
   import Remove from "../icons/remove.svelte";
   import Save from "../icons/save.svelte";
+  import Ghost from "../icons/ghost.svelte";
+
   /**
    * @typedef {import('../../lib/types/index').Extension} Extension
    */
@@ -20,6 +24,24 @@
   export let remove = false;
   export let load = false;
 
+  let imagePromise;
+
+
+
+  // Preload the image with caching logic
+  const preloadImage = async (url) => {
+  try {
+    const response = await FetchImage(url);
+    return `data:${response.mimeType};base64,${response.data}`;
+  } catch (error) {
+    console.error("Image failed to load:", error);
+    throw error;
+  }
+};
+
+  // Trigger preload when the component is initialized
+  $: imagePromise = preloadImage(extension.icon);
+
   const handleRemove = async () => {
     await extensionDB.deleteExtension(extension.package);
     updated();
@@ -31,8 +53,7 @@
   };
 
   const handleLoad = async () => {
-    await extensionDB.addExtension(DB.get("current"));
-    
+    if(DB.get("current")) await extensionDB.addExtension(DB.get("current"));
     DB.set("current", extension);
     updated();
   };
@@ -47,13 +68,23 @@
   };
 </script>
 
-<div class="card  bg-base-100 shadow-xl dark:shadow-none">
+<div class="card bg-base-100">
   <div class="card-body flex-row p-2">
-    <img
-      src={extension.icon}
-      class="h-10 w-10 mr-2 rounded-full object-center overflow-hidden"
-      alt={extension.name}
-    />
+    <div class="h-10 w-10 mr-2 rounded-full overflow-hidden object-center">
+      {#await imagePromise}
+        <!-- Skeleton loader -->
+        <div class="skeleton h-full w-full"></div>
+      {:then imageSrc}
+        <img
+          src={imageSrc}
+          alt={extension.name}
+          class="h-full w-full rounded-full object-cover"
+        />
+      {:catch}
+        <!-- Default fallback in case of failure -->
+        <Ghost class="h-full w-full" />
+      {/await}
+    </div>
     <div class="flex flex-col">
       <span>{extension.name}</span>
       <span class="text-xs"

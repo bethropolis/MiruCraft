@@ -82,16 +82,17 @@
           <span class="flex-grow items-center hover:bg-base-100"
             >{extension.name}</span
           >
-          <!-- {#await isExtensionInstalled(extension.package) then isInstalled}
-            {#if isInstalled} -->
-            <button
-            class="btn btn-square btn-outline btn-primary flex items-center justify-center"
-            on:click={() => installExtension(extension.url)}
-            >
-            <Download/>
-            </button>
-          <!-- {/if}
-        {/await} -->
+          {#await isExtensionInstalled(extension.package)}
+
+            {:then isInstalled}
+              {#if !isInstalled}
+              <button
+              class="btn btn-square btn-outline btn-primary flex p-1 items-center justify-center"
+              on:click={() => installExtension(extension.url)}>
+                  <Download   />
+              </button>
+            {/if}
+        {/await}
         </li>
       {/each}
     </ul>

@@ -36,6 +36,20 @@ export namespace app {
 	        this.error = source["error"];
 	    }
 	}
+	export class ImageResponse {
+	    data: number[];
+	    mimeType: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new ImageResponse(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.data = source["data"];
+	        this.mimeType = source["mimeType"];
+	    }
+	}
 
 }
 
