@@ -47,7 +47,7 @@ func TestMakeRequest(t *testing.T) {
     }
 
     // Check the response headers
-    if resp.Headers["Content-Type"][0] != "application/json" {
-        t.Errorf("Expected Content-Type application/json, got %s", resp.Headers["Content-Type"][0])
+    if resp.Headers["Content-Type"] != "application/json" {
+        t.Errorf("Expected Content-Type application/json, got %s", resp.Headers["Content-Type"])
     }
 }

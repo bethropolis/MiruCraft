@@ -100,7 +100,7 @@ func GetCacheDir() (string, error) {
 		return "", fmt.Errorf("failed to get user cache dir: %w", err)
 	}
 
-	appCacheDir := filepath.Join(cacheDir, "Miru test/images/")
+	appCacheDir := filepath.Join(cacheDir, "MiruCraft/images/")
 	if _, err := os.Stat(appCacheDir); os.IsNotExist(err) {
 		err := os.MkdirAll(appCacheDir, 0755)
 		if err != nil {
