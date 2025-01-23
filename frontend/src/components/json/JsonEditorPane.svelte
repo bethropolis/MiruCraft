@@ -25,13 +25,15 @@
     font-size: 10pt;
     line-height: 1.4;
 
+    }
     
-    /* JSON colors (Dracula theme) */
-    --jsonBracketHoverBackground: #44475A;
-    --jsonValColor: #F8F8F2;
-    --jsonKeyColor: #FF79C6;
-    --jsonValStringColor: #F1FA8C;
-    --jsonValNumberColor: #BD93F9;
-    --jsonValBooleanColor: #BD93F9;
-  }
+    :global(.dark) {
+      /* JSON colors (Dracula theme) */
+      --jsonBracketHoverBackground: #44475A;
+      --jsonValColor: #F8F8F2;
+      --jsonKeyColor: #FF79C6;
+      --jsonValStringColor: #F1FA8C;
+      --jsonValNumberColor: #BD93F9;
+      --jsonValBooleanColor: #BD93F9;
+    }
 </style>

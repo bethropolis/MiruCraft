@@ -39,9 +39,9 @@
    * Handles updates to the current extension and refreshes the list of saved extensions.
    * It also updates the code store with the current extension's script.
    *
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  function handleUpdate() {
+  async function handleUpdate() {
     current = DB.get("current");
     extensionsPromise = fetchExtensions();
     $code = current.script;
@@ -82,33 +82,26 @@
   <ExtensionInstall bind:showModal on:extensionInstalled={handleUpdate} />
 {/if}
 
-<main class="p-4 w-full h-screen ">
-  <d class="nav flex mb-4">
+<main class="flex flex-col h-screen overflow-hidden">
+  <div class="nav flex mb-4">
     <h2 class="flex uppercase items-center">Extension Manager</h2>
     <div class="flex-grow"></div>
-
     <div class="group flex gap-4">
       <div class="tooltip tooltip-left" data-tip="Search for extensions">
-        <button
-          class="btn btn-sm bg-base-100 shadow-none border-none"
-          on:click={toggleModal}
-        >
+        <button class="btn btn-sm bg-base-100 shadow-none border-none" on:click={toggleModal}>
           <Search />
         </button>
       </div>
       <div class="tooltip tooltip-left" data-tip="Upload a new extension">
-        <button
-          class="btn btn-sm bg-base-100 shadow-none border-none"
-          on:click={handleFileUpload}
-        >
+        <button class="btn btn-sm bg-base-100 shadow-none border-none" on:click={handleFileUpload}>
           <Upload />
         </button>
       </div>
-    </div></d
-  >
+    </div>
+  </div>
 
   <div class="current">
-    <h3 class="uppercase mb-3">Current</h3>
+    <h3 class="uppercase p-2 mb-3">Current</h3>
     {#if current && verExtensionMateData(current)}
       <Extension extension={current} save={true} on:updated={handleUpdate} />
     {:else}
@@ -116,10 +109,9 @@
     {/if}
   </div>
 
-  <!-- saved extensions -->
-  <div class="saved">
-    <h3 class="uppercase mb-3">Saved</h3>
-    <div class="overflow-y-auto h-[75vh]">
+  <div class="saved flex flex-col flex-grow overflow-y-auto overflow-x-hidden"> 
+    <h3 class="uppercase p-2 mb-3 sticky top-0 bg-base-100 z-10">Saved</h3> 
+    <div class="extensions-list flex-grow"> 
       {#await extensionsPromise}
         <div class="w-full flex justify-center">
           <span class="loading loading-dots loading-md"></span>
@@ -143,7 +135,6 @@
     </div>
   </div>
 
-  <!-- invisible file upload -->
   <input
     type="file"
     class="hidden"

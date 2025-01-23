@@ -21,8 +21,9 @@ export namespace app {
 	export class HTTPResponse {
 	    status: number;
 	    body: string;
-	    headers: {[key: string]: string[]};
+	    headers: {[key: string]: string};
 	    error?: string;
+	    duration?: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new HTTPResponse(source);
@@ -34,6 +35,7 @@ export namespace app {
 	        this.body = source["body"];
 	        this.headers = source["headers"];
 	        this.error = source["error"];
+	        this.duration = source["duration"];
 	    }
 	}
 	export class ImageResponse {

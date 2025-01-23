@@ -44,10 +44,11 @@ class Extension {
       options = options || {};
       options.headers = options.headers || {};
       options.headers["Miru-Url"] = options.headers["Miru-Url"] || this.webSite;
+      options.extension = this.package;
 
       let requestUrl = this.constructUrl(options.headers["Miru-Url"], url);
 
-      const response = await request(requestUrl, options);
+      const response = await request(requestUrl, options );
 
       return response;
     } catch (error) {
@@ -90,7 +91,7 @@ class Extension {
     const settings = await ExtensionSettingsDB.getByKey(this.package, key);
 
     if (settings) {
-      return settings.value;
+      return settings.value ?? settings.defaultValue;
     }
 
     return null;
@@ -106,7 +107,7 @@ class Extension {
     await ExtensionSettingsDB.add({
       ...setting,
       package: this.package,
-      value: setting.defaultValue,
+      defaultValue: setting.defaultValue,
     });
   }
 
@@ -163,6 +164,8 @@ class Extension {
       element: element,
       content: element.html(),
       text: element.text(),
+      innerHTML: element.html(),
+      outerHTML: element.toString(),
       getAttributeText(selector = "") {
         return element.attr(selector) || "";
       },
@@ -184,6 +187,8 @@ class Extension {
       content: element.html(),
       text: element.text(),
       attr: element.attr(),
+      innerHTML: element.html(),
+      outerHTML: element.toString(),
       getAttributeText(selector = "") {
         return element.attr(selector) || "";
       },

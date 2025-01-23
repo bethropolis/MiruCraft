@@ -30,6 +30,8 @@ export const manager = writable(new ExtensionManager());
 
 export const alert = writable({ type: '', content: '', show: false });
 
+export const eventStore = writable({ type: '', data: null });
+
 
 
 config.subscribe(value => {

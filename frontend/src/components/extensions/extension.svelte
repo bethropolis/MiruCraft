@@ -55,6 +55,7 @@
   const handleLoad = async () => {
     if(DB.get("current")) await extensionDB.addExtension(DB.get("current"));
     DB.set("current", extension);
+    DB.set("code", extension.script);
     updated();
   };
 

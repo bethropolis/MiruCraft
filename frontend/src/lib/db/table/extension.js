@@ -29,8 +29,9 @@ import { db } from '../db';
  * @property {string} options.label
  * @property {string} options.value
  * @property {string | boolean} defaultValue
- * @property {string} [description]
+ * @property {string} [desc]
  */
+
 
 /**
  * @namespace extensionDB
@@ -137,16 +138,15 @@ export const ExtensionSettingsDB = {
 	add: async (settings) => {
 		const setting = await ExtensionSettingsDB.getByKey(settings.package, settings.key);
 		if (setting) {
-			return db.extensionSettings
+			return await db.extensionSettings
 				.where('package')
 				.equals(settings.package)
 				.and((item) => item.key === settings.key)
 				.modify({
 					title: settings.title,
 					type: settings.type,
-					options: settings.options,
-					defaultValue: settings.defaultValue,
-					description: settings.description
+					defaultValue: settings?.defaultValue || "",
+					desc: settings?.desc|| "",
 				});
 		}
 		return db.extensionSettings.add(settings);
