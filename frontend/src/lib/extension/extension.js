@@ -1,4 +1,3 @@
-import { element } from "svelte/internal";
 import { ExtensionSettingsDB } from "../db/db.js";
 import { request } from "./req.js";
 import * as cheerio from "cheerio";

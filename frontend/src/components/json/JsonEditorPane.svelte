@@ -20,7 +20,7 @@
     /* Ensure scrolling is enabled within the container */
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 48px); /* Adjust to fit within the viewport as needed */
+    max-height: calc(100dvh - 48px - 1rem); /* Adjust to fit within the viewport as needed */
     width: 100%;
     font-size: 10pt;
     line-height: 1.4;

@@ -6,7 +6,6 @@
   import Trash from "../icons/remove.svelte";
   import { eventStore } from "../../lib/store/store";
   import Modal from "../utils/modal.svelte";
-  import { filter } from "cheerio/dist/commonjs/api/traversing";
 
   let Requests = networkDB.getAllRequests();
 
