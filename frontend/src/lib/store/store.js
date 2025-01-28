@@ -33,6 +33,14 @@ export const alert = writable({ type: '', content: '', show: false });
 export const eventStore = writable({ type: '', data: null });
 
 
+/**
+ * A writable store that holds an array of console log entries.
+ * Each entry is an object with { message, level, timestamp }.
+ * @type {import('svelte/store').Writable<{ args: any[], level: 'log' | 'info' | 'warn' | 'error', timestamp: Date }[]>}
+ */
+export const consoleLogStore = writable([]);
+
+
 
 config.subscribe(value => {
     DB.set('config', value);
