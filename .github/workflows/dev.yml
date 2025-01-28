@@ -1,4 +1,4 @@
-name: Wails Build
+name: Dev Build
 
 on:
   push:
@@ -37,18 +37,6 @@ jobs:
           check-latest: true
           go-version: 1.23.3  
 
-      - name: Cache go modules
-        uses: actions/cache@v4
-        with:
-          # /go/bin is for `go install`-ed tools
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-            ~/go/bin
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
       - name: setup bun.js
         uses: oven-sh/setup-bun@v2
         with:
@@ -66,13 +54,13 @@ jobs:
 
       - name: Install Linux Wails deps
         if:   runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
+        run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.1-dev gcc-aarch64-linux-gnu
 
       - name: Build Linux App
         if:  runner.os == 'Linux'
         run: |
           echo "building on ${{ matrix.build.platform }}"
-          wails build --platform ${{matrix.build.platform}} -webview2 "download" -o '${{matrix.build.name}}'
+          wails build --platform ${{matrix.build.platform}} -tags webkit2_41 -webview2 "download" -o '${{matrix.build.name}}'
         shell: bash
 
       - name: Build MacOS App zipped

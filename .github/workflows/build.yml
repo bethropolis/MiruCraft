@@ -1,4 +1,4 @@
-name: Wails Build
+name: Release Build
 
 on:
   pull_request:

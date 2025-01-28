@@ -9,24 +9,26 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.14",
     "postcss": "^8.4.47",
-    "svelte": "^3.49.0",
+    "svelte": "4",
     "tailwindcss": "^3.4.14",
-    "vite": "^3.0.7"
+    "vite": "4"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.2",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/language": "^6.10.3",
     "@ddietr/codemirror-themes": "^1.4.4",
+    "@sveltejs/svelte-virtual-list": "^3.0.1",
     "@zerodevx/svelte-json-view": "^1.0.11",
-    "cheerio": "^1.0.0",
+    "cheerio": "latest",
     "dexie": "^4.0.9",
     "js-base64": "^3.7.7",
     "mobx": "^6.13.5",
-    "svelte-codemirror-editor": "^1.4.1"
+    "svelte-codemirror-editor": "^1.4.1",
+    "svelte-json-tree": "^2.2.0"
   }
 }

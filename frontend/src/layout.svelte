@@ -5,8 +5,9 @@
   import {changeTheme} from"./lib/utils/theme.js";
 
 
-$: $config.theme == "dark" ? changeTheme("dracula") : changeTheme($config.theme);
 
+
+$: $config.theme == "dark" ? changeTheme("dracula") : changeTheme($config.theme);
 </script>
 
 <main class="flex h-screen">

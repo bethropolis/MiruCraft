@@ -13,17 +13,21 @@ export class ExtensionManager {
   constructor() {
     this.extension = null;
   }
-  async ExtractExtensionMetaData(jsCode) {
-    let extensionData = readExtensionMetaData(jsCode);
-    Object.assign(this.extension, extensionData);
-  }
+
 
   async loadExtension(jsCode) {
-    const blob = new Blob([jsCode], { type: "application/javascript" });
+    const metadata = await readExtensionMetaData(jsCode);
+
+    const namedJsCode = this.nameJsCode(jsCode, metadata.package);                  
+
+    const blob = new Blob([namedJsCode], { type: "application/javascript" });
     const url = URL.createObjectURL(blob);
+
     const module = await import(url);
     this.extension = new module.default();
-    await this.ExtractExtensionMetaData(jsCode);
+
+    // Assign metadata to the extension
+    Object.assign(this.extension, metadata);
 
     if (this.extension.load) {
       await this.extension.load();
@@ -49,5 +53,11 @@ export class ExtensionManager {
   async watch(url) {
     if (!this.extension) throw new Error("Extension not loaded");
     return await this.extension.watch(url);
+  }
+  nameJsCode(jsCode, packageName) {
+    return `
+  ${jsCode}
+//# sourceURL=${packageName}.js
+`;
   }
 }

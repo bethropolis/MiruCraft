@@ -33,8 +33,8 @@ export default class ExtensionStore {
    * @param {string} script
    * @returns {Promise<string>}
    */
-  installExtension(script) {
-    return new Promise((resolve, reject) => {
+  async installExtension(script) {
+    return new Promise(async (resolve, reject) => {
       const extensionData = readExtensionMetaData(script);
 
       if (!extensionData || !verExtensionMateData({ ...extensionData })) {
@@ -46,12 +46,12 @@ export default class ExtensionStore {
 
       if (isClient()) {
         import(script /* @vite-ignore */)
-          .then((module) => {
+          .then(async (module) => {
             const extension = new module.default();
 
             Object.assign(extension, extensionData);
 
-            extensionDB.addExtension(extensionData);
+            await extensionDB.addExtension(extensionData);
             this.setExtension(extension.package, extension);
             extension.load();
             return resolve(extension.package);
