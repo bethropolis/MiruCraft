@@ -1,8 +1,4 @@
 import './style.css'
-import "./lib/external/CryptoJS.min.js"
-import "./lib/external/jsencrypt.min.js"
-import "./lib/external/md5.min.js"
-
 import App from './App.svelte'
 
 
