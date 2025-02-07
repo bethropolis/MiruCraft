@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.2",
+    "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/language": "^6.10.3",
     "@ddietr/codemirror-themes": "^1.4.4",
@@ -27,6 +28,7 @@
     "cheerio": "latest",
     "dexie": "^4.0.9",
     "js-base64": "^3.7.7",
+    "jshint": "^2.13.6",
     "mobx": "^6.13.5",
     "svelte-codemirror-editor": "^1.4.1",
     "svelte-json-tree": "^2.2.0"

@@ -3,7 +3,7 @@
   import Alert from "./components/utils/alert.svelte";
   import { config } from "./lib/store/store";
   import {changeTheme} from"./lib/utils/theme.js";
-
+  import "./lib/utils/json-override.js";
 
 
 

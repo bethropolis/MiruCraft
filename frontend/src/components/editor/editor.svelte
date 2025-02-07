@@ -2,15 +2,14 @@
   // @ts-ignore
   import CodeMirror from "svelte-codemirror-editor";
   import { javascript } from "@codemirror/lang-javascript";
-  import { dracula } from "@ddietr/codemirror-themes/dracula";
-  import {materialLight} from '@ddietr/codemirror-themes/material-light'
-  import { code, config } from "../../lib/store/store";
+  import { code } from "../../lib/store/store";
   import { DB } from "../../lib/db/local";
   import {
     codeCompletions,
     jsMetadataCompletions,
   } from "../../lib/editor/autocomplete";
   import { saveCurrentLocal } from "../../lib/extension/saveCurrent";
+  import { editorTheme } from "../../lib/editor/editorTheme";
 
   let debounceTimeout;
   const debounceDelay = 300; // delay in milliseconds
@@ -25,9 +24,6 @@
   };
 
 
-  const editorTheme = () =>{
-    return $config.theme == "dark" ? dracula : materialLight;
-  }
 </script>
 
 <CodeMirror

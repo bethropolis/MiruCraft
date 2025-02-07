@@ -4,7 +4,7 @@ export namespace app {
 	    url: string;
 	    method: string;
 	    headers: {[key: string]: string};
-	    body: string;
+	    body: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new HTTPRequest(source);

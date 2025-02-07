@@ -11,7 +11,7 @@
     info: false,
     warn: false,
     error: false,
-  }; 
+  };
 
   /* ===== TYPE DEFINITIONS ===== */
   /**
@@ -38,14 +38,6 @@
   /** @type {HTMLDivElement | null} */
   let terminalOutput = null;
 
-  /* ===== STORE SUBSCRIPTIONS ===== */
-  unsubscribeMessages = consoleLogStore.subscribe((value) => {
-    messages = value;
-    if (typeof window !== "undefined") {
-      requestAnimationFrame(scrollToBottom);
-    }
-  });
-
   /* ===== EXPORTED FUNCTIONS ===== */
   export function clearConsole() {
     consoleLogStore.set([]);
@@ -63,12 +55,23 @@
     DB.set("visibleLevels", visibleLevels);
   }
 
+  /* ==== SAFETY CHECK ====*/
+  function isSafeToRender(obj) {
+    try {
+      JSON.stringify(obj);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
   /* ===== LIFECYCLE ===== */
   onMount(() => {
-    return () => {
-      if (unsubscribeMessages) unsubscribeMessages();
-    };
+    const unsubscribe = consoleLogStore.subscribe((value) => {
+      messages = value;
+      requestAnimationFrame(scrollToBottom);
+    });
+    return () => unsubscribe();
   });
 </script>
 
@@ -108,9 +111,9 @@
         class:error={logEntry.level === "error"}
       >
         <!-- <span class="timestamp">{logEntry.timestamp.toLocaleTimeString()}</span> -->
-        <span class="log-level" aria-hidden="true">
+        <!-- <span class="log-level" aria-hidden="true">
           {#if logEntry.level === "info"}�{:else if logEntry.level === "warn"}�{:else if logEntry.level === "error"}�{/if}
-        </span>
+        </span> -->
         <div class="log-arguments">
           {#each logEntry.args as arg}
             {#if typeof arg === "string"}
@@ -130,6 +133,12 @@
 <style>
   /* ===== ROOT VARIABLES ===== */
   :root {
+    /* Log colors */
+    --log-color: #383a42;
+    --info-color: #005cc5;
+    --warn-color: #d73a49;
+    --error-color: #d73a49;
+
     /* Theme-agnostic variables */
     --terminal-padding: 0;
     --terminal-border-radius: 0.25rem;
@@ -210,7 +219,7 @@
     --json-tree-function-color: #50fa7b;
     --json-tree-number-color: #bd93f9;
     --json-tree-label-color: #8be9fd;
-    --json-tree-property-color: #FF79C6;
+    --json-tree-property-color: #ff79c6;
     --json-tree-arrow-color: #6272a4;
     --json-tree-operator-color: #f8f8f2;
     --json-tree-null-color: #ff79c6;
@@ -253,12 +262,6 @@
       sans-serif;
     --container-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-    /* Log colors */
-    --log-color: #383a42;
-    --info-color: #005cc5;
-    --warn-color: #d73a49;
-    --error-color: #d73a49;
-
     /* JSON tree colors */
     --json-tree-string-color: #22863a;
     --json-tree-symbol-color: #22863a;
@@ -276,23 +279,9 @@
     --json-tree-regex-color: #22863a;
   }
 
-  :global(span.label){
-
-    /* 
-    display: flex;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-   */
-   /* undo all the above */
+  :global(span.label) {
     display: inline;
-    -webkit-user-select: auto;            
+    -webkit-user-select: auto;
     -moz-user-select: auto;
     user-select: auto;
     align-items: auto;
@@ -368,7 +357,7 @@
   }
 
   .log-item {
-    padding: var(--spacing-xs) 0;
+    padding: var(--spacing-xs) 5px;
     display: flex;
     align-items: center;
     gap: var(--log-item-gap);
@@ -456,6 +445,6 @@
   .log-item-text.error,
   .log-item-json.error {
     --json-tree-label-color: var(--error-color);
-    color: var(--error-color);
+    color: var(--error-color) !important;
   }
 </style>

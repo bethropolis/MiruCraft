@@ -64,7 +64,7 @@
   <div class="w-full flex-1 flex flex-col min-h-0">
     <div class="p-3 border-b flex justify-between items-center shadow-sm">
       <div class="flex gap-2">
-        <select class="select select-bordered select-sm text-sm bg-primary w-full max-w-[150px]" on:change={handleChange}>
+        <select class="select select-bordered select-sm text-sm bg-primary text-white w-full max-w-[150px]" on:change={handleChange}>
           <option value={"all"} selected>All Extensions</option>
           {#await availableExtensions then extensions}
             {#if extensions.length !== 0}

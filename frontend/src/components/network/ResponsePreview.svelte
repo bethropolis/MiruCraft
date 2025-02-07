@@ -1,9 +1,16 @@
 <script>
+  // @ts-ignore
+  import CodeMirror from "svelte-codemirror-editor";
   import { JsonView } from "@zerodevx/svelte-json-view";
+  import { html } from "@codemirror/lang-html";
+  import { editorTheme } from "../../lib/editor/editorTheme";
+  import { DB } from "../../lib/db/local";
+
+
 
   export let responseBody;
   export let contentType;
-  let activePreviewTab = "preview";
+  let activePreviewTab = DB.get("activePreviewTab") || "preview";
 
   function isJSON(type) {
     return (
@@ -28,33 +35,39 @@
       type === "application/javascript"
     );
   }
+
+ 
+  function updateActiveTab(tab) {
+    activePreviewTab = tab;
+    DB.set("activePreviewTab", tab);
+  }
+  
 </script>
 
 <div class="flex-1 flex flex-col pt-3 gap-2">
   <div role="tablist" class="tabs m-0 w-[200px] tabs-boxed bg-base-200">
     <button
-     role="tab"
+      role="tab"
       class={`tab text-sm -mb-px  ${
         activePreviewTab === "preview"
           ? "shadow-md bg-base-100 dark:bg-neutral"
           : ""
       }`}
-      on:click={() => (activePreviewTab = "preview")}
+      on:click={() => (updateActiveTab("preview"))}
     >
       Preview
     </button>
     <button
-    role="tab"
-     class={`tab text-sm -mb-px  ${
+      role="tab"
+      class={`tab text-sm -mb-px  ${
         activePreviewTab === "raw"
           ? "shadow-md bg-base-100 dark:bg-neutral"
           : ""
       }`}
-      on:click={() => (activePreviewTab = "raw")}
+      on:click={() => (updateActiveTab("raw"))}
     >
       Raw
     </button>
-
   </div>
 
   <div class="flex-1 overflow-auto mt-2">
@@ -89,12 +102,30 @@
           </pre>
       {/if}
     {:else if activePreviewTab === "raw"}
-      <div class="wrap ">
-        <pre
-          class="text-xs font-mono bg-gray-50 dark:bg-base-300 p-3 rounded overflow-auto whitespace-pre-wrap"
-          >{responseBody}
+      {#if isHTML(contentType)}
+        <div class="wrap">
+          <CodeMirror
+            value={responseBody}
+            lang={html()}
+            styles={{
+              "&": {
+                maxWidth: "100%",
+                height: "100%",
+                fontSize: "10pt",
+              },
+            }}
+            theme={editorTheme()}
+            readonly = {true}
+            placeholder="HTML Preview"
+          />
+        </div>
+      {:else}
+        <div class="wrap">
+          <pre
+            class="text-xs font-mono bg-gray-50 dark:bg-base-300 p-3 rounded overflow-auto whitespace-pre-wrap">{responseBody}
         </pre>
-      </div>
+        </div>
+      {/if}
     {/if}
   </div>
 </div>
@@ -108,6 +139,4 @@
     font-size: 10pt;
     line-height: 1.4;
   }
-
-
 </style>

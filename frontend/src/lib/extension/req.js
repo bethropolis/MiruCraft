@@ -5,6 +5,7 @@ import { config } from "../store/store";
 /**
  * @typedef {import("../db/table/network").NetworkRequest} NetworkRequest
  * @typedef {import("../../../wailsjs/go/models.ts").app.HTTPResponse} HTTPResponse
+ * @typedef {import("../../../wailsjs/go/models.ts").app.HTTPRequest} HTTPRequest
  */
 
 /**
@@ -31,11 +32,12 @@ import { config } from "../store/store";
  */
 export async function request(url, options) {
   try {
+    /** @type {HTTPRequest} */
     const req = {
       url,
       method: options.method || "GET",
       headers: getHeaders(options.headers) || {},
-      body: options.body || "",
+      body:  options.body || {},
     };
 
     const response = await Request(req);

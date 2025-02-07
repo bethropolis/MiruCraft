@@ -77,9 +77,8 @@
         {#if request.request.body}
           <CollapsibleSection title="Request Data">
             <pre
-              class="text-xs font-mono bg-gray-50 dark:bg-neutral-800 p-3 rounded overflow-auto whitespace-pre-wrap">
-            {request.request.body}
-          </pre>
+              class="text-xs font-mono bg-gray-50 dark:bg-neutral-800 p-3 rounded overflow-auto whitespace-pre-wrap"
+              >{request.request.body}</pre>
           </CollapsibleSection>
         {/if}
       </div>
