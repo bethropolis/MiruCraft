@@ -7,7 +7,7 @@
   import DropdownInput from "../utils/dropdownInput.svelte";
   import Globe from "../icons/globe.svelte";
   import Search from "../icons/search.svelte";
-  import { DB } from '../../lib/db/local.js';
+  import { DB, sessionDB } from '../../lib/db/db.js';
   import { patchConsole, restoreConsole } from "../../lib/utils/logger-override.js";
 
   let page = 1;
@@ -16,13 +16,12 @@
   let tabs = ["result", "console"];
   let modalType = "detail";
   let searchQuery = "";
-  let detailUrl = "";
+  let detailUrl = sessionDB.getItem("detailUrl") || "";
   let detailList = [];
-  let watchUrl = "";
+  let watchUrl = sessionDB.getItem("watchUrl") || "";
   let watchList = [];
 
-  let currentlyRunning = false;
-
+  let currentlyRunning = false; 
 
   function changeActiveTab(tab) {
     activeTab = tab;
@@ -147,6 +146,9 @@
           placeholder="enter or Select a detail url..."
           bind:options={detailList}
           bind:selectedOption={detailUrl}
+          on:change={() => {
+            sessionStorage.setItem("detailUrl", detailUrl);
+          }}
         />
         <Globe />
       </label>
@@ -167,6 +169,9 @@
           placeholder="enter or Select a watch url..."
           bind:options={watchList}
           bind:selectedOption={watchUrl}
+          on:change={() => {
+            sessionStorage.setItem("watchUrl", watchUrl);
+          }}
         />
         <Globe />
       </label>

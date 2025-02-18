@@ -12,7 +12,7 @@ export * from "./table/setting";
 export * from  "./table/network";
 
 export { DB } from "./local";
-
+export { sessionDB } from "./session";
 /**
  * @class
  * @extends Dexie

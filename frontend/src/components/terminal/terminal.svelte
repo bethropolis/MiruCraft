@@ -2,7 +2,7 @@
   /* ===== IMPORTS ===== */
   import { onMount } from "svelte";
   import JSONTree from "svelte-json-tree";
-  import { consoleLogStore } from "../../lib/store/store";
+  import { config, consoleLogStore } from "../../lib/store/store";
   import { DB } from "../../lib/db/local";
 
   /* ===== PROPS ===== */
@@ -57,6 +57,7 @@
 
   /* ==== SAFETY CHECK ====*/
   function isSafeToRender(obj) {
+    // if($config.recursiveConsoleOutput) return true;
     try {
       JSON.stringify(obj);
       return true;
@@ -119,9 +120,9 @@
             {#if typeof arg === "string"}
               <pre class="log-item-text {logEntry.level}">{arg}</pre>
             {:else}
-              <div class="log-item-json {logEntry.level}">
-                <JSONTree value={arg} />
-              </div>
+                <div class="log-item-json {logEntry.level}">
+                  <JSONTree value={arg} />
+                </div>
             {/if}
           {/each}
         </div>
