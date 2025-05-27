@@ -27,14 +27,14 @@ func FetchAndCacheImage(url string) (ImageResponse, error) {
 	// Check if the image is already cached
 	if _, err := os.Stat(filename); err == nil {
 		// Read the cached file
-		blob, err := os.ReadFile(filename);
+		blob, err := os.ReadFile(filename)
 		if err != nil {
 			return ImageResponse{}, fmt.Errorf("failed to read cached file: %w", err)
 		}
-		
+
 		// Detect MIME type for cached file
 		mimeType := http.DetectContentType(blob)
-		
+
 		return ImageResponse{
 			Data:     blob,
 			MimeType: mimeType,
@@ -50,7 +50,7 @@ func FetchAndCacheImage(url string) (ImageResponse, error) {
 			"User-Agent":    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
 		},
 	}
-	
+
 	response, err := MakeRequest(req)
 	if err != nil {
 		return ImageResponse{}, fmt.Errorf("failed to fetch image: %w", err)
@@ -100,7 +100,7 @@ func GetCacheDir() (string, error) {
 		return "", fmt.Errorf("failed to get user cache dir: %w", err)
 	}
 
-	appCacheDir := filepath.Join(cacheDir, "MiruCraft/images/")
+	appCacheDir := filepath.Join(cacheDir, APP_INFO["name"]+"/images/")
 	if _, err := os.Stat(appCacheDir); os.IsNotExist(err) {
 		err := os.MkdirAll(appCacheDir, 0755)
 		if err != nil {

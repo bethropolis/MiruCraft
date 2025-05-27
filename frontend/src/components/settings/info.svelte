@@ -16,11 +16,12 @@
         alt="MiruCraft"
         class="w-40 h-40 object-contain rounded-full"
       />
+      <a href="https://github.com/bethropolis/MiruCraft" on:click={OpenUrl}>
       <button
         class="btn-sm w-36 h-8 mt-4 font-sans font-medium rounded-full bg-primary text-white hover:opacity-75 focus:scale-95"
         >Github</button
-      >
-    </div>
+      ></a>
+    </div>  
   </div>
 
   <div class="flex-grow"></div>
@@ -33,9 +34,9 @@
         <a href="https://miru.js.org" on:click={OpenUrl}>Official Miru repo</a>
       </li>
       <li>
-        <a href="" on:click={OpenUrl}>Official Miru extension warehouse</a>
+        <a href="https://github.com/miru-project/repo" on:click={OpenUrl}>Official Miru extension warehouse</a>
       </li>
-      <li><a href="" on:click={OpenUrl}>Miru extension documentation</a></li>
+      <li><a href="https://github.com/appdevelpo/miru-extension-guide/blob/main/english.md" on:click={OpenUrl}>Miru extension guide</a></li>
     </ul>
   </div>
 </main>

@@ -34,7 +34,6 @@
     const response = await FetchImage(url);
     return `data:${response.mimeType};base64,${response.data}`;
   } catch (error) {
-    console.error("Image failed to load:", error);
     throw error;
   }
 };

@@ -1,13 +1,14 @@
 <script>
-  import { activeTab } from "./lib/store/store.js";
   import Editor from "./components/editor/editor.svelte";
   import ExtensionManager from "./components/extensions/extensionManager.svelte";
   import JsonHeader from "./components/json/jsonHeader.svelte";
-  import Settings from "./components/settings/settings.svelte";
-  import Info from "./components/settings/info.svelte";
-  import Layout from "./layout.svelte";
-  import NetworkInfo from "./components/network/networkInfo.svelte";
   import Network from "./components/network/network.svelte";
+  import NetworkInfo from "./components/network/networkInfo.svelte";
+  import Info from "./components/settings/info.svelte";
+  import Settings from "./components/settings/settings.svelte";
+  import Layout from "./layout.svelte";
+  import { activeTab } from "./lib/store/store.js";
+
 
   function getActiveComponent() {
     switch ($activeTab) {

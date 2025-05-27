@@ -3,8 +3,8 @@ export namespace app {
 	export class HTTPRequest {
 	    url: string;
 	    method: string;
-	    headers: {[key: string]: string};
-	    body: string;
+	    headers: Record<string, string>;
+	    body: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new HTTPRequest(source);
@@ -21,7 +21,7 @@ export namespace app {
 	export class HTTPResponse {
 	    status: number;
 	    body: string;
-	    headers: {[key: string]: string};
+	    headers: Record<string, string>;
 	    error?: string;
 	    duration?: string;
 	
