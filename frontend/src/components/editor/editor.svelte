@@ -1,6 +1,7 @@
 <script>
   // @ts-ignore
   import CodeMirror from "svelte-codemirror-editor";
+  import { onMount } from "svelte";
   import { javascript } from "@codemirror/lang-javascript";
   import { lintGutter, linter } from "@codemirror/lint";
   import { code, config } from "../../lib/store/store";
@@ -8,7 +9,6 @@
   import { codeCompletions, jsMetadataCompletions } from "../../lib/editor/autocomplete";
   import { saveCurrentLocal } from "../../lib/extension/saveCurrent";
   import { editorTheme } from "../../lib/editor/editorTheme";
-
 
   const debounceDelay = 300; // in milliseconds
 
@@ -84,7 +84,30 @@
   ];
 
 
-  console.log($config.isLinterEnabled)
+  let view;
+
+
+  const saveScrollPos = () => {
+      if (view) {
+        const scrollPos = view.scrollDOM.scrollTop;
+        DB.set("editorScrollPos", scrollPos);
+      }
+    };
+
+  onMount(() => {
+    const savedScrollPos = DB.get("editorScrollPos") || 0;
+    if (savedScrollPos && view) {
+      requestAnimationFrame(() => {
+        view.scrollDOM.scrollTop = parseInt(savedScrollPos, 10);
+      });
+    }
+
+    return () => {
+      saveScrollPos();
+    };
+  });
+
+
 </script>
 
 <CodeMirror
@@ -99,6 +122,7 @@
   }}
   theme={editorTheme()}
   extensions={extensions}
-  placeholder="Write your code here...(Ctrl+Space) for autocomplete"
+  placeholder="Write your code here...(Ctrl+Space for autocomplete)"
   on:change={(c) => saveCode(c.detail)}
+  on:ready={(e) => view = e.detail}
 />

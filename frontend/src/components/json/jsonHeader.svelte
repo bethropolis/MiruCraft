@@ -23,6 +23,7 @@
 
   let currentlyRunning = false; 
 
+
   function changeActiveTab(tab) {
     activeTab = tab;
     DB.set("jsonViewTab", tab);
@@ -147,6 +148,7 @@
           bind:options={detailList}
           bind:selectedOption={detailUrl}
           on:change={() => {
+            alert(detailUrl);
             sessionStorage.setItem("detailUrl", detailUrl);
           }}
         />
